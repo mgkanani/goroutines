@@ -2,12 +2,13 @@ package runtime
 
 import (
 	"testing"
-	"fmt"
 )
 
-func TestGoRoutine(t *testing.T){
+func TestGoRoutine(t *testing.T) {
 	g := goRoutine()
-	fmt.Println(g)
+	if g == nil {
+		panic("invalid go-routine pointer")
+	}
 }
 
 func BenchmarkCustom(b *testing.B) {
@@ -34,7 +35,6 @@ func BenchmarkCustom(b *testing.B) {
 	}
 }
 
-
 func BenchmarkChan(b *testing.B) {
 	// If just one channel is used then it won't be fair comparison.
 	// In std-channel based communication, sender underneath calls goready.
@@ -48,9 +48,9 @@ func BenchmarkChan(b *testing.B) {
 			awakeParent <- i
 		}
 		close(parent)
-	}(child,parent)
+	}(child, parent)
 	for i := 0; i < N; i++ {
-		child<-i
+		child <- i
 		<-parent
 	}
 	close(child)

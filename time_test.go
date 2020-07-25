@@ -16,3 +16,10 @@ func BenchmarkTimeNow(b *testing.B) {
 		time.Now()
 	}
 }
+
+func TestNow(t *testing.T) {
+	ts := Now()
+	if ts <= 0 {
+		panic("invalid time stamp")
+	}
+}

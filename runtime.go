@@ -10,7 +10,7 @@ const (
 	waitReasonChanReceive = 14
 	//waitReasonChanSend    = 15
 	//traceEvGoBlockSend    = 22 // goroutine blocks on chan send [timestamp, stack]
-	traceEvGoBlockRecv    = 23 // goroutine blocks on chan recv [timestamp, stack]
+	traceEvGoBlockRecv = 23 // goroutine blocks on chan recv [timestamp, stack]
 )
 
 type g struct{}
@@ -30,4 +30,3 @@ func gopark(lock *mutex, reason uint8, traceEv int, traceSkip int)
 
 //go:linkname goready runtime.goready
 func goready(gp *g, traceskip int)
-
