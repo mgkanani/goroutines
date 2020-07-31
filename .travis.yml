@@ -25,5 +25,4 @@ install:
 
 script:
   - go test ./...
-  - go test -bench . -run ^$
-  - ./glstest/bench.sh
+#  - go test -bench . -run ^$
