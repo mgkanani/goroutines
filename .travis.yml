@@ -26,4 +26,4 @@ install:
 script:
   - go test ./...
   - go test -bench . -run ^$
-  - ./synctest/bench.sh
+  - ./glstest/bench.sh

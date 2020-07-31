@@ -1,4 +1,4 @@
-package synctest
+package glstest
 
 import (
 	"flag"
