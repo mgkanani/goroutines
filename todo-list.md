@@ -7,7 +7,8 @@
     **Along with Lock-free DS, custom go-routine's async behaviour is required**. 
     `Polling` will not improve or even perform bad compared to channels.
     E.g. Consider the batching case, 10000 producer go-routines and one consumer-goroutine. In case of buffer/queue is full.
-    Consumer go-routine should be given priority. Instead of producer-routines polling for empty bucket, they should be `park`ed.\
+    Consumer go-routine should be given priority. Instead of producer-routines polling for empty bucket, 
+    they should be `park`ed. Golang scheduler can schedule consumer routine quickly compared to polling option. \
     Lock-free along with `gopark` and `goready` options, above scenario can be achieved.
     
     
