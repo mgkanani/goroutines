@@ -1,4 +1,4 @@
-package runtime
+package goroutines
 
 import (
 	"testing"
@@ -22,23 +22,23 @@ func BenchmarkCustom(b *testing.B) {
 		for i := 0; i < max; i++ {
 			lock(lck)
 			goready(mainRtn, 0)
-			gopark(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
+			goparkunlock(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
 		}
 	}(N)
 
 	lock(lck)
-	gopark(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
+	goparkunlock(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
 	for i := 0; i < N-1; i++ {
 		lock(lck)
 		goready(goRtn, 0)
-		gopark(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
+		goparkunlock(lck, waitReasonChanReceive, traceEvGoBlockRecv, 0)
 	}
 }
 
 func BenchmarkChan(b *testing.B) {
 	// If just one channel is used then it won't be fair comparison.
 	// In std-channel based communication, sender underneath calls goready.
-	// while receiver calls gopark.
+	// while receiver calls goparkunlock.
 	child := make(chan int)
 	parent := make(chan int)
 	N := b.N

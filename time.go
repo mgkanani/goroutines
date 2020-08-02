@@ -1,4 +1,4 @@
-package runtime
+package goroutines
 
 //requires dynamic linking to work
 import _ "unsafe"
