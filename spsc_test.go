@@ -56,7 +56,7 @@ func BenchmarkChanSPSC(b *testing.B) {
 		wg.Done()
 	}()
 	go func() {
-		for _ = range ch {
+		for range ch {
 		}
 		wg.Done()
 	}()

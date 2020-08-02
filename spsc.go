@@ -5,16 +5,19 @@ import (
 	"unsafe"
 )
 
+// Producer can be either Single or Multi
 type Producer interface {
 	Produce(item interface{})
 	Close()
 }
 
+// Consumer can be either Single or Multi
 type Consumer interface {
 	Consume() interface{}
 	Close()
 }
 
+// SPSC follows Single Producer Single Consumer patterned
 type SPSC interface {
 	Produce(item interface{})
 	Consumer
@@ -31,6 +34,7 @@ type spsc struct {
 	mutex      *mutex
 }
 
+// NewSPSC create a SingleProducerSingleConsumer object and returns
 func NewSPSC(cap int) SPSC {
 	pc := &spsc{
 		ringBuffer: make([]interface{}, cap),
@@ -44,6 +48,7 @@ func NewSPSC(cap int) SPSC {
 	return pc
 }
 
+// Close notifies Producer/Consumer that Peer won't send data anymore.
 func (ring *spsc) Close() {
 	lock(ring.mutex)
 	if ring.isClosed {

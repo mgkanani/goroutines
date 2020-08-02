@@ -39,6 +39,7 @@ func goready(gp *g, traceskip int)
 //go:linkname readgstatus runtime.readgstatus
 func readgstatus(gp *g) uint32
 
+// Park puts calling go-routine in blocking state and invokes unlockFunc before blocking.
 func Park(isSender bool, unlockFunc func(*g, unsafe.Pointer) bool, lck *mutex) {
 	lock(lck)
 	//clouse := (func(*g, unsafe.Pointer) bool)(unlockFunc) // todo: make it exported by making *g unsafe.Pointer
@@ -49,6 +50,7 @@ func Park(isSender bool, unlockFunc func(*g, unsafe.Pointer) bool, lck *mutex) {
 	}
 }
 
+// Awake alters blocked/waiting rtn(go-routine) to running.
 func Awake(rtn unsafe.Pointer) {
 	gp := (*g)(rtn)
 	if readgstatus(gp) == waiting {
