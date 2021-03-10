@@ -2,8 +2,6 @@ package goroutines
 
 import "unsafe"
 
-func goRoutineID() int64
-
 func goRoutine() *g
 
 // CurRoutine returns current go routine pointer.
